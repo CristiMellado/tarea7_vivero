@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Registrar Persona</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container">
+    <div class="mb-4">
+        <img th:src="@{/img/registrar_persona.png}" alt="Icono perfil" width="50">
+        <h1>Registrar Persona</h1>
+    </div>
+    <div class="registrar">
+        <form th:action="@{/registrar-persona}" method="post">
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+            </div>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required>
+            </div>
+            
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn color-boton">REGISTRAR</button>
+				<button onclick="window.location.href='/volver'" type="button" class="btn color-boton">VOLVER</button>
+            </div>
+        </form>
+
+    </div>
+    <br>
+	<div class="alert alert-primary" role="alert" th:if="${mensajeResultado!=null and res.equals('ok')}">
+		<p th:text="${mensajeResultado}"></p>
+	</div>
+		<div class="alert alert-danger" role="alert" th:if="${mensajeResultado!=null and res.equals('ko')}">
+		<p th:text="${mensajeResultado}"></p>
+	</div>
+</div>
+
+
+	<script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

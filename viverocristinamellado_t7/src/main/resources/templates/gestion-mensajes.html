@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Gestión Mensajes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+	<div class="mb-4">
+		<img th:src="@{/img/gestion_mensajes.png}" alt="Icono perfil"
+			width="50">
+		<h1>Gestión de Mensajes</h1>
+	</div>
+        
+        <!-- Secciones en dos filas con dos columnas cada una -->
+        <div class="container" style="max-width:80%;">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <!-- Insertar mensaje de seguimiento -->
+                <div class="card h-100">
+                    <div class="card-header">
+                    	<h4>Insertar Mensaje de Seguimiento</h4>
+                    </div>
+                    <div class="card-body">
+                    <form th:action="@{/insertar-mensaje}" method="post">
+                        <label for="ejemplar">Seleccionar ejemplar:</label>
+                        <select id="id" class="form-select mb-3" name="id" required>
+                            <option value="">Seleccione un ejemplar</option>
+                            <option th:each="ejemplar : ${ejemplares}" th:value="${ejemplar.id}" th:text="${ejemplar.id} + ' - ' + ${ejemplar.nombre}"></option>
+                        </select>
+                        <label for="mensaje">Mensaje:</label>
+                        <textarea id="mensaje" class="form-control mb-3" rows="3" name="mensaje" required></textarea>
+                        <button class="btn btn-warning">Insertar</button>
+                     </form>
+					<div class="alert alert-primary" role="alert" th:if="${mensajeInsertar != null}">
+						<p th:text="${mensajeInsertar}"></p>
+					</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Filtrar mensajes por rango de fechas -->
+                <div class="card h-100">
+                    <div class="card-header">
+                  	  <h4>Filtrar Mensajes por Rango de Fechas</h4>
+                    </div>
+                    <div class="card-body">
+					<form th:action="@{/filtrar-mensajes-fechas}" method="post">
+				    <label for="fechaInicio">Fecha Inicio:</label>
+				    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mb-3">
+				    <label for="fechaFin">Fecha Fin:</label>
+				    <input type="date" id="fechaFin" name="fechaFin" class="form-control mb-3">
+				    <button type="submit" class="btn btn-warning">Filtrar</button>
+					  <div class="alert alert-danger" role="alert"
+								th:if="${notificacion!=null}">
+								<p th:text="${notificacion}"></p>
+						</div>   
+					</form>
+					<!-- Modal para mostrar tabla de resultados -->
+					<div class="modal fade" id="fechaModal" tabindex="-1"
+					role="dialog" aria-labelledby="fechaModalLabel"
+					aria-hidden="true" th:if="${mostrarModalFecha}"> <!-- Lo uso en el se -->
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="fechaModalLabel">Mensajes por Rango de Fechas</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered" id="personaTabla">
+									<thead>
+										<tr>
+											<th>MENSAJE</th>
+											<th>FECHA-HORA</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="fechaFiltrado : ${fechasFiltrado}">
+											<td th:text="${fechaFiltrado.mensaje}"></td>
+											<td th:text="${fechaFiltrado.fechahora}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</div>
+					</div>
+					</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Filtrar mensajes por persona -->
+                <div class="card h-100">
+                    <div class="card-header">
+                    	<h4>Filtrar Mensajes por Persona</h4>
+                    </div>
+                    <div class="card-body">
+                    	<form th:action="@{/filtrar-mensajes-persona}" method="post" id="filtrarFormPersona">
+	                        <label for="persona">Seleccionar persona:</label>
+	                        <select id="id" class="form-select mb-3" name="id" required>
+	                            <option value="">Seleccione una persona</option>
+	                            <option th:each="persona : ${personas}" th:if="${persona.listaMensajes.size > 0}" th:value="${persona.id}" th:text="${persona.id} + ' - ' + ${persona.nombre.toUpperCase()}"></option>
+	                        </select>
+	                        <button id="filtrarPersona" class="btn btn-warning" type="submit">Filtrar</button>
+                        </form>
+       					<!-- Modal para mostrar tabla de resultados -->
+						<div class="modal fade" id="personaModal" tabindex="-1"
+							role="dialog" aria-labelledby="personaModalLabel"
+							aria-hidden="true" th:if="${mostrarModal}">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="personaModalLabel">Mensajes de: <span th:text=${nombrePersona.toUpperCase()} style="color:green"></span></h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<table class="table table-bordered" id="personaTabla">
+											<thead>
+												<tr>
+													<th>MENSAJE</th>
+													<th>FECHA-HORA</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="personaFiltrado : ${personasFiltrado}">
+													<td th:text="${personaFiltrado.mensaje}"></td>
+													<td th:text="${personaFiltrado.fechahora}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Filtrar mensajes por tipo de planta -->
+                <div class="card h-100">
+                    <div class="card-header">
+                    	<h4>Filtrar Mensajes por Tipo de Planta</h4>
+                    </div>
+                    <div class="card-body">
+                    <form th:action="@{/filtrar-mensajes-planta}" method="post" id="filtrarFormPlanta">
+                        <label for="tipoPlanta">Seleccionar tipo de planta:</label>
+                        <select id="id" class="form-select mb-3" name="id" required>
+                            <option value="">Seleccione un tipo de planta</option>
+                            <option th:each="planta : ${plantas}" th:if="${planta.listaEjemplares.size > 0}" th:value="${planta.id}" th:text="${planta.id} + ' - ' +${planta.nombreComun.toUpperCase()}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-warning">Filtrar</button>
+                    </form>
+                           					<!-- Modal para mostrar tabla de resultados -->
+						<div class="modal fade" id="plantaModal" tabindex="-1" 
+							role="dialog" aria-labelledby="plantaModalLabel"
+							aria-hidden="true" th:if="${mostrarModalPlanta}"> <!-- llamada JS del id planta modal -->
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="plantaModalLabel">Mensajes de la Planta: <span style="color:green" th:text="${nombrePlanta.toUpperCase()}"></span></h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<table class="table table-bordered" id="plantaTabla">
+											<thead>
+												<tr>
+													<th>EJEMPLAR</th>	
+													<th>MENSAJE</th>
+													<th>FECHA-HORA</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="plantaFiltrado : ${plantasFiltrado}">
+													<td th:text="${plantaFiltrado.ejemplar.nombre}"></td>
+													<td th:text="${plantaFiltrado.mensaje}"></td>
+													<td th:text="${plantaFiltrado.fechahora}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Cerrar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+       </div>
+        
+        <!-- Botón Volver -->
+        <div class="text-center mt-4">
+            <button onclick="window.location.href='/volver'" type="button" class="btn color-boton">VOLVER</button>
+        </div>
+    </div>
+    
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<script>
+	    var mostrarModal = "${mostrarModal}";
+	    if (mostrarModal) {
+	        $('#personaModal').modal('show');
+	    }
+	    
+	    var mostrarModalPlanta = "${mostrarModalPlanta}";
+	    if(mostrarModalPlanta){
+	    	$('#plantaModal').modal('show');
+	    }
+	    
+	    var mostrarModalFecha = "${mostrarModalFecha}";
+	    if(mostrarModalFecha){
+	    	$('#fechaModal').modal('show');
+	    }
+	    
+	</script>
+</body>
+</html>

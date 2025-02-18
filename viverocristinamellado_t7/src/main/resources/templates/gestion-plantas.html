@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Gestión Plantas</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+	<div class="container">
+		<div class="mb-4">
+			<img th:src="@{/img/gestion_planta.png}" alt="Icono perfil"
+				width="50">
+			<h1>Gestión de Plantas</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h4>Nueva Planta</h4>
+					</div>
+					<div class="card-body">
+						<form th:action="@{/nueva-planta}" method="post">
+							<div class="mb-3">
+								<label for="codigoPlanta" class="form-label">Código de
+									la Planta</label> <input type="text" class="form-control" name="codigo"
+									id="codigoPlanta" required>
+							</div>
+							<div class="mb-3">
+								<label for="nombreComunPlanta" class="form-label">Nombre
+									Común</label> <input type="text" class="form-control"
+									name="nombreComun" id="nombreComunPlanta" required>
+							</div>
+							<div class="mb-3">
+								<label for="nombreCientificoPlanta" class="form-label">Nombre
+									Científico</label> <input type="text" class="form-control"
+									name="nombreCientifico" id="nombreCientificoPlanta" required>
+							</div>
+							<button type="submit" class="btn btn-success">Registrar
+								Planta</button>
+						</form>
+						<div class="alert alert-primary" role="alert" th:if="${mensajeCrear!=null and resCrear.equals('ok')}">
+							<p th:text="${mensajeCrear}"></p>
+						</div>
+						<div class="alert alert-danger" role="alert" th:if="${mensajeCrear!=null and resCrear.equals('ko')}">
+							<p th:text="${mensajeCrear}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+
+
+			<!-- Sección Modificar Planta -->
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h4>Modificar Planta</h4>
+					</div>
+					<div class="card-body">
+						<form th:action="@{/modificar-planta}" method="post">
+							<!-- Seleccionar Planta -->
+							<div class="mb-3">
+								<label for="plantaSeleccionada" class="form-label">
+									Selecciona una planta</label> 
+								<select class="form-control" id="id" name="id" 
+									required>
+									<option value="" disabled selected>Selecciona una
+										planta</option>
+								   <option th:each="planta : ${plantas}" 
+								           th:value="${planta.id}" 
+								           th:text="${planta.id + ' - ' + planta.codigo}">
+								   </option>
+								</select>
+							</div>
+
+							<!-- Nombre Común -->
+							<div class="mb-3">
+								<label for="nuevoNombreComunPlanta" class="form-label"> Nuevo
+									Nombre Común</label> <input type="text" class="form-control"
+									id="nuevoNombreComunPlanta" name="nombreComun">
+							</div>
+
+							<!-- Nombre Científico -->
+							<div class="mb-3">
+								<label for="nuevoNombreCientificoPlanta" class="form-label">Nuevo
+									Nombre Científico</label> <input type="text" class="form-control"
+									id="nuevoNombreCientificoPlanta" name="nombreCientifico">
+							</div>
+
+							<!-- Botón de modificación -->
+							<button type="submit" class="btn btn-success">Modificar
+								Planta</button>
+						</form>
+						<!-- Div para mostrar el mensaje -->
+						<div class="alert alert-primary" role="alert" th:if="${mensajeModificar!=null and resModificar.equals('ok')}">
+							<p th:text="${mensajeModificar}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="buttons">
+		<button onclick="window.location.href='/volver'" type="button" class="btn color-boton">VOLVER</button>
+	</div>
+
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
