@@ -126,4 +126,21 @@ public class Validacion {
 		return true;
 	}
 
+	public static boolean validarNifNie(String nifnie) {
+		// Patrón para NIF: 8 números seguidos de una letra
+		String nifRegex = "^[0-9]{8}[A-Z]$";
+		// Patrón para NIE: X, Y o Z seguido de 7 números y una letra
+		String nieRegex = "^[XYZ][0-9]{7}[A-Z]$";
+		
+		Pattern patternNif = Pattern.compile(nifRegex);
+		Pattern patternNie = Pattern.compile(nieRegex);
+		
+		if (nifnie == null || nifnie.isEmpty() || nifnie.contains(" ")) {
+			return false;
+		}
+		
+		nifnie = nifnie.toUpperCase();
+		return patternNif.matcher(nifnie).matches() || patternNie.matcher(nifnie).matches();
+	}
+
 }

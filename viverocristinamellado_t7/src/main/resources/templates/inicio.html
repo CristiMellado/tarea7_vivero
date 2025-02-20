@@ -14,54 +14,56 @@
 </head>
 <body>
 
-	<h1>VIVERO</h1>
-
-	<div class="container">
-		<div class="tabla-container">
-			<h1>
-				<img th:src="@{/img/planta.png}" alt="planta" width="40">Plantas
-			</h1>
-			<table>
-				<tr>
-					<th>ID PLANTA</th>
-					<th>CÓDIGO</th>
-					<th>NOMBRE COMÚN</th>
-					<th>NOMBRE CIENTÍFICO</th>
-				</tr>
-				<tr th:each="planta : ${plantas}">
-					<td th:text="${planta.id}"></td>
-					<td th:text="${planta.codigo}"></td>
-					<td th:text="${planta.nombreComun}"></td>
-					<td th:text="${planta.nombreCientifico}"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="formulario">
-			<form th:action="@{/login}" method="post">
-				<img th:src="@{/img/login.png}" alt="Icono login" width="90">
-				<h1>Login</h1>
-				 <div class="form-floating mb-3">
-				 <input type="text" class="form-control" id="floatingInput"
-					name="usuario" placeholder="Introduce tu usuario" required>
-				 <label for="floatingInput">Introduce tu usuario</label>
-				 </div>
-				 <div class="form-floating">
-				 <input type="password" class="form-control" id="floatingPassword"
-					name="password" placeholder="Introduce tu contraseña" required>
-				<label for="floatingPassword">Introduce tu contraseña</label>
-				</div>
-				<button type="submit" class="btn color-boton">INICIAR
-					SESIÓN</button>
-			</form>
-				 <div class="alert alert-danger" role="alert"
-					th:if="${mensajeError!=null}">
-				 <p th:text="${mensajeError}"></p>
-			  </div> 
-		</div>
+    <h1>VIVERO</h1>
+	<div class="custom-btn">
+	    <a th:href="@{/clientes/registrar-cliente}" class="btn color-boton">REGISTRATE</a>
 	</div>
+    <div class="container">
+        <div class="tabla-container">
+            <h1>
+                <img th:src="@{/img/planta.png}" alt="planta" width="40">Plantas
+            </h1>
+            <table>
+                <tr>
+                    <th>ID PLANTA</th>
+                    <th>CÓDIGO</th>
+                    <th>NOMBRE COMÚN</th>
+                    <th>NOMBRE CIENTÍFICO</th>
+                </tr>
+                <tr th:each="planta : ${plantas}">
+                    <td th:text="${planta.id}"></td>
+                    <td th:text="${planta.codigo}"></td>
+                    <td th:text="${planta.nombreComun}"></td>
+                    <td th:text="${planta.nombreCientifico}"></td>
+                </tr>
+            </table>
+        </div>
 
-	<script src="/webjars/jquery/jquery.min.js"></script>
-	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+        <div class="formulario">
+            <form th:action="@{/auth/login}" method="post">
+                <img th:src="@{/img/login.png}" alt="Icono login" width="90">
+                <h1>Login</h1>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput"
+                           name="usuario" placeholder="Introduce tu usuario" required>
+                    <label for="floatingInput">Introduce tu usuario</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword"
+                           name="password" placeholder="Introduce tu contraseña" required>
+                    <label for="floatingPassword">Introduce tu contraseña</label>
+                </div>
+                <button type="submit" class="btn color-boton">INICIAR SESIÓN</button>
+            </form>
+            <div class="alert alert-danger" role="alert" th:if="${mensajeError!=null}">
+                <p th:text="${mensajeError}"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 

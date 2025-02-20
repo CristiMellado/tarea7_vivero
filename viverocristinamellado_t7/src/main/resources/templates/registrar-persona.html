@@ -14,7 +14,7 @@
         <h1>Registrar Persona</h1>
     </div>
     <div class="registrar">
-        <form th:action="@{/registrar-persona}" method="post">
+        <form th:action="@{/personas/registrar-persona}" method="post">
             <div class="mb-3 input-group">
                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                 <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
@@ -50,8 +50,6 @@
 		<p th:text="${mensajeResultado}"></p>
 	</div>
 </div>
-
-
 	<script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>

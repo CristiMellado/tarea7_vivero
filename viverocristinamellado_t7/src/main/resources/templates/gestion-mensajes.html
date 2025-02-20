@@ -24,7 +24,7 @@
                     	<h4>Insertar Mensaje de Seguimiento</h4>
                     </div>
                     <div class="card-body">
-                    <form th:action="@{/insertar-mensaje}" method="post">
+                    <form th:action="@{/mensajes/insertar-mensaje}" method="post">
                         <label for="ejemplar">Seleccionar ejemplar:</label>
                         <select id="id" class="form-select mb-3" name="id" required>
                             <option value="">Seleccione un ejemplar</option>
@@ -47,7 +47,7 @@
                   	  <h4>Filtrar Mensajes por Rango de Fechas</h4>
                     </div>
                     <div class="card-body">
-					<form th:action="@{/filtrar-mensajes-fechas}" method="post">
+					<form th:action="@{/mensajes/filtrar-mensajes-fechas}" method="post">
 				    <label for="fechaInicio">Fecha Inicio:</label>
 				    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mb-3">
 				    <label for="fechaFin">Fecha Fin:</label>
@@ -104,7 +104,7 @@
                     	<h4>Filtrar Mensajes por Persona</h4>
                     </div>
                     <div class="card-body">
-                    	<form th:action="@{/filtrar-mensajes-persona}" method="post" id="filtrarFormPersona">
+                    	<form th:action="@{/mensajes/filtrar-mensajes-persona}" method="post" id="filtrarFormPersona">
 	                        <label for="persona">Seleccionar persona:</label>
 	                        <select id="id" class="form-select mb-3" name="id" required>
 	                            <option value="">Seleccione una persona</option>
@@ -158,7 +158,7 @@
                     	<h4>Filtrar Mensajes por Tipo de Planta</h4>
                     </div>
                     <div class="card-body">
-                    <form th:action="@{/filtrar-mensajes-planta}" method="post" id="filtrarFormPlanta">
+                    <form th:action="@{/mensajes/filtrar-mensajes-planta}" method="post" id="filtrarFormPlanta">
                         <label for="tipoPlanta">Seleccionar tipo de planta:</label>
                         <select id="id" class="form-select mb-3" name="id" required>
                             <option value="">Seleccione un tipo de planta</option>

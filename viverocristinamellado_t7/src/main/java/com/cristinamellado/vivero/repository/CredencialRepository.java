@@ -1,5 +1,7 @@
 package com.cristinamellado.vivero.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +18,7 @@ public interface CredencialRepository extends JpaRepository<Credencial, Long>{
 	@Query(value = "SELECT * FROM Credenciales c WHERE c.usuario = :usuario AND c.password = :password", nativeQuery = true)
 	Credencial autenticar(String usuario, String password);
 
-	Credencial findByUsuario(String usuario);
+	Optional<Credencial> findByUsuario(String usuario);
 	
 	@Transactional
 	@Modifying

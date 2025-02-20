@@ -27,7 +27,7 @@
 								<h4>Registrar Nuevo Ejemplar</h4>
 							</div>
 							<div class="card-body">
-								<form th:action="@{/registrar-ejemplar}" method="post">
+								<form th:action="@{/ejemplares/registrar-ejemplar}" method="post">
 									<div class="mb-3">
 										<label for="planta" class="form-label">Seleccionar
 											Planta</label> 
@@ -56,7 +56,7 @@
 								<h4>Ver Mensajes de Seguimiento</h4>
 							</div>
 							<div class="card-body">
-								<form th:action="@{/msj-seguimiento}" method="post">
+								<form th:action="@{/ejemplares/msj-seguimiento}" method="post">
 									<div class="mb-3">
 										<label for="planta" class="form-label">Seleccionar
 											Ejemplar</label> <select id="id" name="id" class="form-control"
@@ -127,7 +127,7 @@
 							th:if="${notificacion!=null}">
 							<p th:text="${notificacion}"></p>
 						</div>
-						<form th:action="@{/filtrar-ejemplares}" method="post"
+						<form th:action="@{/ejemplares/filtrar-ejemplares}" method="post"
 							id="filtrarForm">
 							<table class="table table-bordered">
 								<thead>

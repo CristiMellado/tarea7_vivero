@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `bdtarea3dwes_cristimellado`
+-- Base de datos: `bdtarea7dwes_cristimellado`
 --
-CREATE DATABASE IF NOT EXISTS `bdtarea3dwes_cristimellado` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `bdtarea3dwes_cristimellado`;
+CREATE DATABASE IF NOT EXISTS `bdtarea7dwes_cristimellado` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `bdtarea7dwes_cristimellado`;
 
 -- --------------------------------------------------------
 

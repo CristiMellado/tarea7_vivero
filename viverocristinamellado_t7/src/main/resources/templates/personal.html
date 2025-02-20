@@ -15,20 +15,20 @@
         </div>
         <div class="d-flex justify-content-center section-container">
             <div class="icon-container">
-	            <a th:href="@{/gestion-ejemplares}" class="text-decoration-none">
+	            <a th:href="@{/ejemplares/gestion-ejemplares}" class="text-decoration-none">
 	                <img th:src="@{/img/gestion_ejemplares.png}" alt="Ejemplares">
 	                <p>GESTIÓN DE EJEMPLARES</p>
 	            </a>
             </div>
             <div class="icon-container">
-	            <a th:href="@{/gestion-mensajes}" class="text-decoration-none">
+	            <a th:href="@{/mensajes/gestion-mensajes}" class="text-decoration-none">
 	                <img th:src="@{/img/gestion_mensajes.png}" alt="Mensajes">
 	                <p>GESTIÓN DE MENSAJES</p>
 	            </a>
             </div>
         </div>
         <div class="logout-container">
-            <form th:action="@{/logout}" method="get">
+            <form th:action="@{/auth/logout}" method="get">
                 <button type="submit" class="btn color-boton">CERRAR SESIÓN</button>
             </form>
         </div>

@@ -25,7 +25,7 @@
 						<h4>Nueva Planta</h4>
 					</div>
 					<div class="card-body">
-						<form th:action="@{/nueva-planta}" method="post">
+						<form th:action="@{/plantas/nueva-planta}" method="post">
 							<div class="mb-3">
 								<label for="codigoPlanta" class="form-label">Código de
 									la Planta</label> <input type="text" class="form-control" name="codigo"
@@ -63,7 +63,7 @@
 						<h4>Modificar Planta</h4>
 					</div>
 					<div class="card-body">
-						<form th:action="@{/modificar-planta}" method="post">
+						<form th:action="@{/plantas/modificar-planta}" method="post">
 							<!-- Seleccionar Planta -->
 							<div class="mb-3">
 								<label for="plantaSeleccionada" class="form-label">
