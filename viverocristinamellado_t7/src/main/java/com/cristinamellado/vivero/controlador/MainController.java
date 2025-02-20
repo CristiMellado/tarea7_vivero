@@ -10,18 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cristinamellado.vivero.modelo.*;
 import com.cristinamellado.vivero.servicio.*;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/")
 @Controller
 public class MainController {
 	
-	private Sesion sesion;
 	
 	@Autowired
 	private ServiciosPlanta serviciosPlanta;
 	
-	@Autowired
-	private AuthController authController;
-
 	//************************************ INICIO ************************************
 	@GetMapping({"/","/inicio"})
 	public String inicio(Model model) {
@@ -32,13 +30,10 @@ public class MainController {
 
 	//************************************ VOLVER ************************************
 	@GetMapping("/volver")
-    public String volver(Model model) {
-        this.sesion = authController.getSesion();
-        if (sesion.getPerfil() == Perfil.ADMINISTRADOR) {
-            model.addAttribute("user", sesion.getUsuario());
+    public String volver(Model model,HttpSession session) {
+        if (session.getAttribute("perfil")== Perfil.ADMINISTRADOR) {
             return "administrador";
-        } else if (sesion.getPerfil() == Perfil.PERSONAL) {
-            model.addAttribute("user", sesion.getUsuario());
+        } else if (session.getAttribute("perfil")== Perfil.PERSONAL) {
             return "personal";
         } else {
             List<Planta> listaPlantas = serviciosPlanta.verPlantasId();

@@ -29,6 +29,12 @@ public class Ejemplar implements Serializable{
 	@JoinColumn(name="id_ejemplar")
 	private List<Mensaje> listaMensajes = new LinkedList<Mensaje>();
 	
+	@Column
+	private boolean disponible=true;
+	
+	@ManyToOne
+	@JoinColumn(name="id_pedido")
+	private Pedido pedido;
 
 	public Ejemplar() {}
 	
@@ -82,6 +88,21 @@ public class Ejemplar implements Serializable{
 	}
 	
 
+	public boolean isDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
 
 	public String datosVersionCorta() {
 		String resultado = "";

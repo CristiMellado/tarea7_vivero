@@ -48,11 +48,7 @@ input {
     align-items: center; 
 }
 
-.custom-btn {
-    position: absolute;
-    top: 100px; /* Baja el botón */
-    right: 150px; /* Lo mueve más a la izquierda */
-}
+
 
 
 

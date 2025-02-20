@@ -3,7 +3,6 @@ package com.cristinamellado.vivero.controlador;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.cristinamellado.vivero.modelo.Ejemplar;
 import com.cristinamellado.vivero.modelo.Mensaje;
 import com.cristinamellado.vivero.modelo.Persona;
 import com.cristinamellado.vivero.modelo.Planta;
-import com.cristinamellado.vivero.modelo.Sesion;
 import com.cristinamellado.vivero.servicio.ServiciosEjemplar;
 import com.cristinamellado.vivero.servicio.ServiciosPersona;
 import com.cristinamellado.vivero.servicio.ServiciosPlanta;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/ejemplares")
@@ -34,7 +33,6 @@ public class EjemplarController {
     @Autowired
     private ServiciosPersona serviciosPersona;
     
-    private Sesion sesion;
     
     @GetMapping("/gestion-ejemplares")
     public String gestionEjemplares(Model model){
@@ -51,10 +49,10 @@ public class EjemplarController {
 }
     
     @PostMapping("/registrar-ejemplar")
-    public String registrarEjemplar(@RequestParam Long id,Model model){
+    public String registrarEjemplar(@RequestParam Long id,Model model,HttpSession session){
     	Planta planta = serviciosPlanta.existePlanta(id).get();
     	String nombreEjemplar= planta.getCodigo().toUpperCase()+"_"+serviciosEjemplar.siguienteIdEjemplar();
-    	Persona persona = serviciosPersona.findByNombre(sesion.getUsuario());
+    	Persona persona = serviciosPersona.findByNombre((String)session.getAttribute("usuario"));
     	String mensajeInicial = "Mensaje inicial de: "+ persona.getNombre()+" a las "+ new Date();
     	List<Mensaje> listaMensajes = new LinkedList<Mensaje>();
     	listaMensajes.add(new Mensaje(mensajeInicial, persona, null));

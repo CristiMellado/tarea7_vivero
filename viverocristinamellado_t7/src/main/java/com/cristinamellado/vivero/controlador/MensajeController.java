@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.cristinamellado.vivero.modelo.Ejemplar;
 import com.cristinamellado.vivero.modelo.Mensaje;
 import com.cristinamellado.vivero.modelo.Persona;
 import com.cristinamellado.vivero.modelo.Planta;
-import com.cristinamellado.vivero.modelo.Sesion;
 import com.cristinamellado.vivero.servicio.ServiciosEjemplar;
 import com.cristinamellado.vivero.servicio.ServiciosMensaje;
 import com.cristinamellado.vivero.servicio.ServiciosPersona;
 import com.cristinamellado.vivero.servicio.ServiciosPlanta;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/mensajes")
@@ -39,7 +38,6 @@ public class MensajeController {
     @Autowired
     private ServiciosPlanta serviciosPlanta;
     
-    private Sesion sesion;
     
     @GetMapping("/gestion-mensajes")
     public String gestionMensajes(Model model){
@@ -60,11 +58,11 @@ public class MensajeController {
     }
     
     @PostMapping("/insertar-mensaje")
-    public String insertarMensaje(@RequestParam Long id, @RequestParam String mensaje,Model model) {
+    public String insertarMensaje(@RequestParam Long id, @RequestParam String mensaje,Model model,HttpSession session) {
     	List<Ejemplar> listaEjemplar = serviciosEjemplar.listaEjemplares();
     	model.addAttribute("ejemplares", listaEjemplar);
     	Ejemplar ejemplar = serviciosEjemplar.findById(id).get();
-    	Persona persona = serviciosPersona.findByNombre(sesion.getUsuario());
+    	Persona persona = serviciosPersona.findByNombre((String)session.getAttribute("usuario"));
     	Mensaje msj = new Mensaje(mensaje, persona, ejemplar);
     	if(serviciosMensaje.insertarMensaje(msj)) {
     		model.addAttribute("mensajeInsertar", "Se añadió el mensaje correctamente");

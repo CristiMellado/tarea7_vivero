@@ -2,12 +2,18 @@ package com.cristinamellado.vivero.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,7 +43,11 @@ public class Cliente implements Serializable{
 	
 	@Column
 	private String telefono;
-
+	
+	@OneToMany(cascade = CascadeType.ALL) 
+	@JoinColumn(name="id_cliente")
+	private List<Pedido> listaPedidos = new LinkedList<Pedido>();
+	
 	public Cliente() {}
 	
 	public Cliente(String nombre, Date fechaNac, String nifnie, String direccion, String email, String telefono) {
@@ -105,9 +115,14 @@ public class Cliente implements Serializable{
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+	
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public List<Pedido> getListaPedidos() {
+		return listaPedidos;
+	}
+
+	public void setListaPedidos(List<Pedido> listaPedidos) {
+		this.listaPedidos = listaPedidos;
 	}
 
 	@Override

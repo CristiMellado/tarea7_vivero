@@ -8,11 +8,11 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-	<div class="container mt-5">
-    <div class="mb-4 text-center">
+    <div class="mb-2 text-center">
         <img th:src="@{/img/cliente.png}" alt="Icono cliente" width="50">
         <h1>Alta de Cliente</h1>
     </div>
+	<div class="container mt-3">
     <div class="card shadow-lg p-4 mx-auto" style="max-width: 500px;">
         <form th:action="@{/clientes/registrar-cliente}" method="post">
             <!-- Nombre -->
@@ -57,9 +57,11 @@
             </div>
         </form>
     </div>
+        	<div class="buttons">
+				<button onclick="window.location.href='/volver'" type="button" class="btn color-boton">VOLVER</button>
+			</div>
 </div>
 	
-
 	<script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>

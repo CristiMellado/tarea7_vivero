@@ -15,9 +15,6 @@
 <body>
 
     <h1>VIVERO</h1>
-	<div class="custom-btn">
-	    <a th:href="@{/clientes/registrar-cliente}" class="btn color-boton">REGISTRATE</a>
-	</div>
     <div class="container">
         <div class="tabla-container">
             <h1>
@@ -54,6 +51,9 @@
                     <label for="floatingPassword">Introduce tu contraseña</label>
                 </div>
                 <button type="submit" class="btn color-boton">INICIAR SESIÓN</button>
+                	<div class="custom-btn">
+	   				 <a th:href="@{/clientes/registrar-cliente}" class="btn color-boton">REGISTRATE</a>
+					</div>
             </form>
             <div class="alert alert-danger" role="alert" th:if="${mensajeError!=null}">
                 <p th:text="${mensajeError}"></p>
