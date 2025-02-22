@@ -10,24 +10,29 @@
 <body>
 
 <!-- Barra de navegación -->
-<nav class="navbar navbar-expand-lg navbar-light bg-#F8F9FA">
-  <a class="navbar-brand" href="#">Area Clientes</a>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="#">
+  	<img th:src="@{/img/perfil.png}" alt="Icono perfil">
+  	Área <span th:text="${session.perfil}"></span>
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-<div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav" id="leftNavItems">
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="miCarritoTab" data-toggle="tab" role="button" aria-controls="miCarrito" aria-selected="false">
-        <img th:src=@{/img/carrito2.png} alt="Carrito" style="width: 30px; height: 30px; margin-right: 8px;">Mi Carrito
-        </a>
-      </li>
-		<li class="nav-item">
-        <a class="nav-link" th:href="@{/auth/logout}">Cerrar Sesión</a>
-      </li>
-    </ul>
-</div>
-
+	<div class="collapse navbar-collapse" id="navbarNav">
+	    <ul class="navbar-nav" id="leftNavItems">
+	      <li class="nav-item">
+	        <p class="nav-link" th:text="'¡Hola ' + ${session.usuario}+ '!'"></p>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#" id="miCarritoTab" data-toggle="tab" role="button" aria-controls="miCarrito" aria-selected="false">
+	        <img th:src=@{/img/carrito2.png} alt="Carrito">Mi Carrito
+	        </a>
+	      </li>
+			<li class="nav-item">
+	        <a class="nav-link" id="cerrar-sesion" th:href="@{/auth/logout}">Cerrar Sesión</a>
+	      </li>
+	    </ul>
+	</div>
 </nav>
 
 <!-- Pestañas de contenido -->
@@ -35,32 +40,35 @@
   <div class="tab-content" id="myTabContent">
     <!-- Tab de Realizar Pedido -->
     <div class="tab-pane fade show active" id="realizarPedido" role="tabpanel" aria-labelledby="home-tab">
-      <h2>¡Vamos a comprar!</h2>
+      <h2>¡Realiza tu pedido!</h2>
       <form action="#" method="POST">
         <!-- Tabla de Plantas -->
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Planta</th>
-              <th>Cantidad Disponible</th>
-              <th>Cantidad a Pedir</th>
-              <th>Acciones</th> <!-- Nueva columna para añadir al carrito -->
+              <th>PLANTA</th>
+              <th>STOCK DISPONIBLE</th>
+              <th>CANTIDAD</th>
+              <th>AÑADIR</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Planta 1 -->
-            <tr>
-              <td>Planta 1</td>
-              <td>10</td>
+            <tr th:each="planta : ${plantas}">
+              <td th:text="${planta.nombreComun.toUpperCase()}"></td>
+              <td th:text="${planta.listaEjemplares.size()}"></td>
               <td>
-                <select class="form-control" name="planta1">
-                </select>
+	            <select class="form-control" name="cantidad">
+	            <option th:if="${planta.listaEjemplares.isEmpty()}" disabled selected>No disponible</option>
+	            <option th:if="${!planta.listaEjemplares.isEmpty()}" value="0" selected>0</option>
+                <option th:each="ejemplar, iterStat : ${planta.listaEjemplares}" 
+                        th:value="${ejemplar.id}" 
+                        th:text="${iterStat.count}">
+                </option>
+	            </select>
               </td>
               <td>
-                <button type="button" class="btn btn-primary addToCartBtn" data-planta="Planta 1" data-cantidad-disponible="10">Añadir al Carrito</button>
+                <button type="button" class="btn btn-info rounded-pill px-3 addToCartBtn">Añadir al Carrito</button>
               </td>
-            </tr>
-            
             </tr>
           </tbody>
         </table>

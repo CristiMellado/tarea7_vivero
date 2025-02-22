@@ -3,6 +3,7 @@ package com.cristinamellado.vivero.controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cristinamellado.vivero.modelo.Cliente;
 import com.cristinamellado.vivero.modelo.Perfil;
+import com.cristinamellado.vivero.modelo.Planta;
 import com.cristinamellado.vivero.servicio.ServiciosCliente;
+import com.cristinamellado.vivero.servicio.ServiciosPlanta;
 
 
 @Controller
@@ -23,6 +26,9 @@ public class ClienteController {
 
     @Autowired
     private ServiciosCliente serviciosCliente;
+    
+    @Autowired
+    private ServiciosPlanta serviciosPlanta;
     
     @GetMapping("/registrar-cliente")
     public String mostrarRegistroCliente() {
@@ -62,7 +68,9 @@ public class ClienteController {
     
     
     @GetMapping("/cliente")
-    public String cliente() {
+    public String cliente(Model model) {
+    	List<Planta> listaPlantas = serviciosPlanta.verPlantasId();
+    	model.addAttribute("plantas", listaPlantas);
     	return "cliente";
     }
     

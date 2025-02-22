@@ -1,15 +1,16 @@
 @charset "UTF-8";
 body {
-	background-image:url("../img/fondo.jpg");
-	background-size: cover;
+	background-color: #EBEBEC;
 }
 
 .navbar-brand{
 	 margin-left: 150px;
+	 margin-top: 15px;
+	 font-size: x-large;
 }
 
 #leftNavItems {
-    margin-left: 75%;  /* Esto empuja los elementos hacia la derecha */
+    margin-left: 65%;  /* Esto empuja los elementos hacia la derecha */
 }
 
 #leftNavItems .nav-item {
@@ -24,6 +25,34 @@ body {
 
 .nav-item-hover a:hover {
   color: #0056b3;  
+}
+
+#navbarNav {
+	margin-top: 40px;
+}
+
+.navbar {
+	background-color: #1987547d;
+	padding-bottom: 20px;
+}
+
+.navbar img{
+	width: 60px;
+	height: 60px;
+	margin-right: 8px;
+	margin-left: 30px
+}
+
+#leftNavItems img{
+	width: 30px;
+	height: 30px;
+	margin-right: 8px;
+}
+
+#cerrar-sesion:hover {
+	color:white;
+	background-color: rgba(23,162,184,.6);
+	border-radius: 15px;
 }
 
 

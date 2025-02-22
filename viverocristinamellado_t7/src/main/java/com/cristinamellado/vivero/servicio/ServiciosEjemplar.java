@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cristinamellado.vivero.modelo.Ejemplar;
 import com.cristinamellado.vivero.modelo.Mensaje;
+import com.cristinamellado.vivero.modelo.Planta;
 import com.cristinamellado.vivero.repository.EjemplarRepository;
 import com.cristinamellado.vivero.validacion.Validacion;
 
@@ -49,6 +50,7 @@ public class ServiciosEjemplar {
         }
         return ejemplares;
     }
+    
     
     public List<Ejemplar> listaEjemplares(){
     	return ejemplarRepository.findAll();
