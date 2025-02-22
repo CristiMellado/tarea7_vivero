@@ -1,0 +1,29 @@
+@charset "UTF-8";
+body {
+	background-image:url("../img/fondo.jpg");
+	background-size: cover;
+}
+
+.navbar-brand{
+	 margin-left: 150px;
+}
+
+#leftNavItems {
+    margin-left: 75%;  /* Esto empuja los elementos hacia la derecha */
+}
+
+#leftNavItems .nav-item {
+    margin-right: 10px; /* Espaciado entre los elementos */
+}
+
+.nav-item-hover:hover {
+  background-color: #f8f9fa;  
+  color: #007bff;             
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.nav-item-hover a:hover {
+  color: #0056b3;  
+}
+
+

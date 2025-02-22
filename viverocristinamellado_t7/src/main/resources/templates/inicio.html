@@ -50,10 +50,10 @@
                            name="password" placeholder="Introduce tu contraseña" required>
                     <label for="floatingPassword">Introduce tu contraseña</label>
                 </div>
-                <button type="submit" class="btn color-boton">INICIAR SESIÓN</button>
-                	<div class="custom-btn">
-	   				 <a th:href="@{/clientes/registrar-cliente}" class="btn color-boton">REGISTRATE</a>
-					</div>
+                <div>
+                    <button type="submit" class="btn color-boton">INICIAR SESIÓN</button>
+                    <a th:href="@{/clientes/registrar-cliente}" class="btn color-boton-registro">ALTA CLIENTE</a>
+                </div>
             </form>
             <div class="alert alert-danger" role="alert" th:if="${mensajeError!=null}">
                 <p th:text="${mensajeError}"></p>

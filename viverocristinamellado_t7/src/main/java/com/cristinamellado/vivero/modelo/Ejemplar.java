@@ -30,7 +30,7 @@ public class Ejemplar implements Serializable{
 	private List<Mensaje> listaMensajes = new LinkedList<Mensaje>();
 	
 	@Column
-	private boolean disponible=true;
+	private boolean disponible;
 	
 	@ManyToOne
 	@JoinColumn(name="id_pedido")
@@ -42,6 +42,7 @@ public class Ejemplar implements Serializable{
 		this.nombre = nombre;
 		this.planta = planta;
 		this.listaMensajes = listaMensajes;
+		this.disponible = true;
 	}
 
 

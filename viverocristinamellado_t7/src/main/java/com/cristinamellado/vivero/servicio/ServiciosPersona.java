@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cristinamellado.vivero.modelo.Perfil;
 import com.cristinamellado.vivero.modelo.Persona;
 import com.cristinamellado.vivero.repository.CredencialRepository;
 import com.cristinamellado.vivero.repository.PersonaRepository;
@@ -23,7 +24,7 @@ public class ServiciosPersona {
 	
 	
 	@Transactional 
-	public String registrarPersona(Persona persona, String usuario, String password) {
+	public String registrarPersona(Persona persona, String usuario, String password, Perfil perfil) {
 		StringBuilder mensaje = new StringBuilder();
 		boolean valido = true;
 		
@@ -42,7 +43,7 @@ public class ServiciosPersona {
 		
 		if (valido) {
 			boolean emailExiste = personaRepository.findByEmail(persona.getEmail()) != null;
-			boolean usuarioExiste = credencialRepository.findByUsuario(usuario) != null;
+			boolean usuarioExiste = credencialRepository.findByUsuario(usuario).isPresent();
 			
 			if (emailExiste) {
 				mensaje.append("El email ").append(persona.getEmail().toUpperCase()).append(" ya existe. Prueba con otro. ");
@@ -57,7 +58,7 @@ public class ServiciosPersona {
 			try {
 				Persona p = personaRepository.saveAndFlush(persona);
 				if (p != null) {
-					credencialRepository.insertarCredencial(usuario, password);
+					credencialRepository.insertarCredencial(usuario, password, perfil.toString());
 					mensaje.append("Se insertó correctamente la persona y su credencial.");
 				}
 			} catch (Exception e) {

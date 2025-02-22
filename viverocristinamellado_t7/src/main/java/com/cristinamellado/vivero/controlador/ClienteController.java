@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cristinamellado.vivero.modelo.Cliente;
+import com.cristinamellado.vivero.modelo.Perfil;
 import com.cristinamellado.vivero.servicio.ServiciosCliente;
 
 
@@ -43,7 +44,7 @@ public class ClienteController {
             Date fecha = dateFormat.parse(fechaNac);
             
             Cliente cliente = new Cliente(nombre, fecha, nifnie, direccion, email, telefono);
-            String resultado = serviciosCliente.registrarCliente(cliente, usuario, password);
+            String resultado = serviciosCliente.registrarCliente(cliente, usuario, password, Perfil.CLIENTE);
             
             if(resultado.equals("Cliente registrado correctamente")) {
                 model.addAttribute("res", "ok");
@@ -58,4 +59,13 @@ public class ClienteController {
         }
         return "registrar-cliente";
     }
+    
+    
+    @GetMapping("/cliente")
+    public String cliente() {
+    	return "cliente";
+    }
+    
+    
+    
 } 

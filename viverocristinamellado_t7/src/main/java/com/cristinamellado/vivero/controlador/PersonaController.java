@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cristinamellado.vivero.modelo.Perfil;
 import com.cristinamellado.vivero.modelo.Persona;
 import com.cristinamellado.vivero.servicio.ServiciosPersona;
 
@@ -26,7 +27,7 @@ public class PersonaController {
     @PostMapping("/registrar-persona")
     public String registrarPersona(@RequestParam String nombre, @RequestParam String email, @RequestParam String usuario,@RequestParam String password, Model model) {
     	Persona persona = new Persona(nombre, email);
-    	String resultado = serviciosPersona.registrarPersona(persona, usuario, password);
+    	String resultado = serviciosPersona.registrarPersona(persona, usuario, password, Perfil.PERSONAL);
     	if(resultado.equals("Se insertó correctamente la persona y su credencial.")) {
     		model.addAttribute("res", "ok");
     	}else {

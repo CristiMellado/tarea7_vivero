@@ -1,10 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar pedido</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/cliente.css}">
 </head>
 <body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-light bg-#F8F9FA">
+  <a class="navbar-brand" href="#">Area Clientes</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav" id="leftNavItems">
+      <li class="nav-item">
+        <a class="nav-link" href="#" id="miCarritoTab" data-toggle="tab" role="button" aria-controls="miCarrito" aria-selected="false">
+        <img th:src=@{/img/carrito2.png} alt="Carrito" style="width: 30px; height: 30px; margin-right: 8px;">Mi Carrito
+        </a>
+      </li>
+		<li class="nav-item">
+        <a class="nav-link" th:href="@{/auth/logout}">Cerrar Sesión</a>
+      </li>
+    </ul>
+</div>
+
+</nav>
+
+<!-- Pestañas de contenido -->
+<div class="container mt-5">
+  <div class="tab-content" id="myTabContent">
+    <!-- Tab de Realizar Pedido -->
+    <div class="tab-pane fade show active" id="realizarPedido" role="tabpanel" aria-labelledby="home-tab">
+      <h2>¡Vamos a comprar!</h2>
+      <form action="#" method="POST">
+        <!-- Tabla de Plantas -->
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Planta</th>
+              <th>Cantidad Disponible</th>
+              <th>Cantidad a Pedir</th>
+              <th>Acciones</th> <!-- Nueva columna para añadir al carrito -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Planta 1 -->
+            <tr>
+              <td>Planta 1</td>
+              <td>10</td>
+              <td>
+                <select class="form-control" name="planta1">
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary addToCartBtn" data-planta="Planta 1" data-cantidad-disponible="10">Añadir al Carrito</button>
+              </td>
+            </tr>
+            
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    <!-- Tab de Mi Carrito -->
+    <div class="tab-pane fade" id="miCarrito" role="tabpanel" aria-labelledby="miCarritoTab">
+      <h2>Tu Carrito de Compras</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Planta</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="cartTable">
+            <!-- Aquí se mostrarán los elementos del carrito -->
+            <!-- Se actualizará mediante JS -->
+          </tbody>
+        </table>
+        <button class="btn btn-success" id="confirmarPedido">Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts de Bootstrap y JS personalizado -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+// Función para manejar el carrito de compras
+$(document).ready(function() {
+    // Al hacer clic en "Añadir al Carrito"
+    $('.addToCartBtn').on('click', function() {
+        // Obtener los valores de la planta, cantidad seleccionada y cantidad disponible
+        var planta = $(this).data('planta');
+        var cantidadSeleccionada = $(this).closest('tr').find('select').val();
+        var cantidadDisponible = $(this).data('cantidad-disponible');
+
+        if (cantidadSeleccionada > 0 && cantidadSeleccionada <= cantidadDisponible) {
+            var cart = JSON.parse(localStorage.getItem('cart')) || []; // Recuperar carrito guardado
+
+            // Añadir el producto al carrito
+            cart.push({ planta: planta, cantidad: cantidadSeleccionada });
+
+            // Guardar el carrito en el almacenamiento local
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Actualizar la tabla del carrito
+            updateCartTable();
+        }
+    });
+
+    // Función para actualizar la tabla del carrito
+    function updateCartTable() {
+        var cart = JSON.parse(localStorage.getItem('cart')) || [];
+        var cartTable = $('#cartTable');
+        cartTable.empty(); // Limpiar la tabla actual
+
+        cart.forEach(function(item, index) {
+            var row = '<tr><td>' + item.planta + '</td><td>' + item.cantidad + '</td><td><button class="btn btn-danger btn-sm removeFromCart" data-index="' + index + '">Eliminar</button></td></tr>';
+            cartTable.append(row);
+        });
+
+        // Permitir eliminar elementos del carrito
+        $('.removeFromCart').on('click', function() {
+            var index = $(this).data('index');
+            cart.splice(index, 1); // Eliminar del carrito
+            localStorage.setItem('cart', JSON.stringify(cart)); // Guardar carrito actualizado
+            updateCartTable(); // Actualizar la tabla
+        });
+    }
+
+    // Cargar el carrito al cargar la página
+    updateCartTable();
+
+    // Confirmar el pedido
+    $('#confirmarPedido').on('click', function() {
+        alert("¡Pedido confirmado!");
+        localStorage.removeItem('cart'); // Limpiar el carrito
+        updateCartTable(); // Actualizar la tabla para mostrar el carrito vacío
+    });
+});
+</script>
 
 </body>
 </html>

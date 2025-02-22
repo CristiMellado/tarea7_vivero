@@ -22,8 +22,8 @@ public interface CredencialRepository extends JpaRepository<Credencial, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO Credenciales (usuario, password) VALUES (:usuario, :password)", nativeQuery = true)
-	void insertarCredencial(String usuario, String password);
+	@Query(value = "INSERT INTO Credenciales (usuario, password,perfil) VALUES (:usuario, :password, :perfil)", nativeQuery = true)
+	void insertarCredencial(String usuario, String password, String perfil);
 
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cristinamellado.vivero.modelo.Cliente;
+import com.cristinamellado.vivero.modelo.Perfil;
 import com.cristinamellado.vivero.repository.ClienteRepository;
 import com.cristinamellado.vivero.repository.CredencialRepository;
 import com.cristinamellado.vivero.validacion.Validacion;
@@ -25,7 +26,7 @@ public class ServiciosCliente {
     }
     
     @Transactional
-    public String registrarCliente(Cliente cliente, String usuario, String password) {
+    public String registrarCliente(Cliente cliente, String usuario, String password, Perfil perfil) {
         // Validar datos del cliente
         if (!Validacion.validarEmail(cliente.getEmail())) {
             return "El email no tiene un formato válido";
@@ -55,7 +56,7 @@ public class ServiciosCliente {
             Cliente clienteGuardado = clienteRepository.save(cliente);
             
             if(clienteGuardado != null){
-                credencialRepository.insertarCredencial(usuario, password);
+                credencialRepository.insertarCredencial(usuario, password, perfil.toString());
             }
             
             return "Cliente registrado correctamente";

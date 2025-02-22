@@ -48,7 +48,10 @@ input {
     align-items: center; 
 }
 
-
+.color-boton-registro{
+    background-color: lightseagreen;
+    color: white;
+}
 
 
 

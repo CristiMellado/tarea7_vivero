@@ -15,7 +15,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 250px;
+    width: 200px;
     height: 250px;
     margin: 0 30px;
     text-align: center;
@@ -29,7 +29,7 @@ body {
 }
 
 .icon-container p {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     text-align: center;
 }
 
@@ -92,3 +92,8 @@ th{
     color:#ffffff !important;
 }
 
+.d-flex {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Agrega espacio entre los elementos */
+}

@@ -16,11 +16,17 @@ public class Credencial implements Serializable {
 	@Column(unique = true)
 	private String usuario;
 	
+	@Column
+	@Enumerated(EnumType.STRING) //va a tomar el valor del ENUM
+	private Perfil perfil;
+	
 
+	
 	public Credencial() {}
 	
-	public Credencial(String usuario) {
+	public Credencial(String usuario, Perfil perfil) {
 		this.usuario = usuario;
+		this.perfil = perfil;
 
 	}
 
@@ -40,6 +46,14 @@ public class Credencial implements Serializable {
 		this.usuario = usuario;
 	}
 	
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
 	public String datosVersionCorta() {
 		String resultado = "";
 		resultado += "IdCredencial: " + id + " | " + "Usuario " + usuario;

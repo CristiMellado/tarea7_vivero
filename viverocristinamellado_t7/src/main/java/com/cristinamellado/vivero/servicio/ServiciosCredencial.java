@@ -24,21 +24,23 @@ public class ServiciosCredencial {
 	}
 	
 	
+	/**
+	 * @param usuario
+	 * @param password
+	 * @param session
+	 * Autentica el usuario y en caso de que exista se guardar en sesión el usuario y el perfil
+	 */
 	public void autenticar(String usuario, String password, HttpSession session) {
-		if (usuario.equals("admin") && password.equals("admin")) {
-			session.setAttribute("usuario", "admin");
-			session.setAttribute("perfil", Perfil.ADMINISTRADOR);
-		} else {
 			Credencial credencial = credencialRepository.autenticar(usuario, password);
 			if (credencial!=null) {
 				session.setAttribute("usuario", usuario);
-				session.setAttribute("perfil", Perfil.PERSONAL);
+				session.setAttribute("perfil", credencial.getPerfil());
 			}else {
 				session.setAttribute("usuario", null);
 				session.setAttribute("perfil", Perfil.INVITADO);
 			}
 		}
-	}
+	
 
 	
 
