@@ -28,7 +28,7 @@ body {
 }
 
 #navbarNav {
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 .navbar {
@@ -53,6 +53,47 @@ body {
 	color:white;
 	background-color: rgba(23,162,184,.6);
 	border-radius: 15px;
+}
+
+.boton{
+	display:flex;
+	justify-content:center;
+	padding-bottom: 10px;
+}
+
+.badge {
+	position: absolute;
+	top: 1px;
+	right: 88px;
+	font-weight: 700;
+	font-family: sans-serif;
+	font-size: 13px;
+	color: #fff;
+	background-color: #17a2b8;
+	border: 1px solid #fff;
+	padding: 2px 6px;
+	min-width: 20px;
+	height: 20px;
+	text-align: center;
+	border-radius: 85%;
+}
+
+.badge:empty {
+	display: none;
+}
+
+.cart {
+	position: relative;
+	width: auto;
+	height: auto;
+	margin: 0 15px;
+	display: inline-block;
+}
+
+.cart img {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
 }
 
 

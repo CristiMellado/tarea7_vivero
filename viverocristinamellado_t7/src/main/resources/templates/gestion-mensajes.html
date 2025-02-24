@@ -70,9 +70,9 @@
                     <div class="card-body">
 					<form th:action="@{/mensajes/filtrar-mensajes-fechas}" method="post">
 				    <label for="fechaInicio">Fecha Inicio:</label>
-				    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mb-3">
+				    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mb-3" required>
 				    <label for="fechaFin">Fecha Fin:</label>
-				    <input type="date" id="fechaFin" name="fechaFin" class="form-control mb-3">
+				    <input type="date" id="fechaFin" name="fechaFin" class="form-control mb-3" required>
 				    <button type="submit" class="btn btn-warning">Filtrar</button>
 					  <div class="alert alert-danger" role="alert"
 								th:if="${notificacion!=null}">

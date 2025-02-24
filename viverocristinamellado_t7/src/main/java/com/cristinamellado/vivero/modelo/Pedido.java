@@ -36,6 +36,8 @@ public class Pedido implements Serializable{
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 
+	public Pedido() {}
+	
 	public Pedido(Date fecha, List<Ejemplar> listaEjemplares) {
 		this.fecha = fecha;
 		this.listaEjemplares = listaEjemplares;

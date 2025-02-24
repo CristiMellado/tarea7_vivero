@@ -67,4 +67,9 @@ public class ServiciosEjemplar {
 	   public Optional<Ejemplar> findByNombre(String nombre) {
 			return ejemplarRepository.findByNombre(nombre);
 		}
+
+	public List<Ejemplar> obtenerCantidadEjemplares(String tipoPlanta, Integer cantidadEjemplares) {
+		return ejemplarRepository.obtenerCantidadEjemplares(tipoPlanta,cantidadEjemplares);
+		
+	}
 }

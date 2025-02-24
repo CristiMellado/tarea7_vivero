@@ -44,6 +44,11 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	List<Mensaje> seguimientoMensajes(@Param("idEjemplar") Long idEjemplar);
 	
 	Optional<Ejemplar> findByNombre(String nombre);
+
+	@Query("SELECT e FROM Ejemplar e WHERE e.planta.nombreComun = :tipoPlanta")
+//	@Query(value = "SELECT * FROM ejemplares e INNER JOIN plantas p ON e.id_planta = p.id WHERE p.nombre_comun = :tipoPlanta LIMIT ?1", nativeQuery = true)
+	List<Ejemplar> obtenerCantidadEjemplares(@Param("tipoPlanta") String tipoPlanta, @Param("cantidadEjemplares") int cantidadEjemplares);
+
 	
 	
 }//

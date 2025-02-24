@@ -32,5 +32,40 @@
 		    </ul>
 		</div>
 	</nav>
+	<body>
+    <div class="container mt-4">
+    	<img th:src="@{/img/stock.png}" alt="Icono stock"
+				width="50">
+        <h2 class="text-center mb-4">Gestión de Stock</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Planta</th>
+                        <th>Ejemplar</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ejemplar : ${ejemplares}">
+                        <td th:text="${ejemplar.planta.nombreComun.toUpperCase()}"></td>
+                        <td th:text="${ejemplar.nombre.toUpperCase()}"></td>
+                        <td th:text="${ejemplar.disponible}"></td>
+                        
+                    </tr>
+                    <tr>
+   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    	<div class="buttons mt-4">
+		<button onclick="window.location.href='/volver'" type="button"
+			class="btn color-boton">VOLVER</button>
+	</div>
+	<!-- Scripts de Bootstrap y JS personalizado -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

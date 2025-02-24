@@ -119,4 +119,13 @@ public class EjemplarController {
     model.addAttribute("ejemplares", listaEjemplar);
     return "gestion-ejemplares";
     }
+    
+    @GetMapping("/gestion-stock")
+    public String gestionStock(Model model) {
+        List<Ejemplar> listaEjemplar = serviciosEjemplar.listaEjemplares();
+        model.addAttribute("ejemplares", listaEjemplar);
+    	return "gestion-stock";
+    }
+    
+    
 } 
