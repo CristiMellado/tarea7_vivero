@@ -12,4 +12,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	Optional<Cliente> findByNifnie(String nifnie);
 	
+	Cliente findByNombre(String nombre);
+	
 }

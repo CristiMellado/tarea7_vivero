@@ -122,7 +122,7 @@ public class EjemplarController {
     
     @GetMapping("/gestion-stock")
     public String gestionStock(Model model) {
-        List<Ejemplar> listaEjemplar = serviciosEjemplar.listaEjemplares();
+        List<Ejemplar> listaEjemplar = serviciosEjemplar.verEjemplaresId();
         model.addAttribute("ejemplares", listaEjemplar);
     	return "gestion-stock";
     }

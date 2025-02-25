@@ -50,8 +50,7 @@
                     <tr th:each="ejemplar : ${ejemplares}">
                         <td th:text="${ejemplar.planta.nombreComun.toUpperCase()}"></td>
                         <td th:text="${ejemplar.nombre.toUpperCase()}"></td>
-                        <td th:text="${ejemplar.disponible}"></td>
-                        
+                        <td th:text="${ejemplar.disponible ? 'Disponible' : 'No disponible'}">></td>     
                     </tr>
                     <tr>
    

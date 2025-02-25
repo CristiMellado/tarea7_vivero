@@ -64,5 +64,9 @@ public class ServiciosCliente {
             throw new RuntimeException("Error al registrar el cliente: " + e.getMessage());
         }
     }
+    
+    public Cliente findByNombre(String nombre) {
+    	return clienteRepository.findByNombre(nombre);
+    }
 }
 

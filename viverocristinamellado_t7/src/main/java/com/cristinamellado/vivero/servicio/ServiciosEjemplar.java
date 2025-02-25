@@ -13,6 +13,9 @@ import com.cristinamellado.vivero.modelo.Planta;
 import com.cristinamellado.vivero.repository.EjemplarRepository;
 import com.cristinamellado.vivero.validacion.Validacion;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 
 
 @Service
@@ -20,6 +23,9 @@ public class ServiciosEjemplar {
 
 	@Autowired
 	EjemplarRepository ejemplarRepository;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	
 	public boolean insertarEjemplar(Ejemplar ejemplar) {
@@ -68,8 +74,18 @@ public class ServiciosEjemplar {
 			return ejemplarRepository.findByNombre(nombre);
 		}
 
+	
+	public List<Ejemplar> verEjemplaresId(){
+		List<Ejemplar> lista = ejemplarRepository.findAllByOrderByPlantaNombreComunAscIdAsc();
+		return lista;
+	}
+	
 	public List<Ejemplar> obtenerCantidadEjemplares(String tipoPlanta, Integer cantidadEjemplares) {
-		return ejemplarRepository.obtenerCantidadEjemplares(tipoPlanta,cantidadEjemplares);
+		return ejemplarRepository.obtenerCantidadEjemplares(entityManager,tipoPlanta,cantidadEjemplares);
 		
+	}
+	
+	public void actualizarDisponible(List<Ejemplar> listaEjemplar) {
+		ejemplarRepository.actualizarDisponible(listaEjemplar);
 	}
 }

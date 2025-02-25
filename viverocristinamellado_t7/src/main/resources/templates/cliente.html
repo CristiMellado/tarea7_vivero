@@ -44,6 +44,9 @@
     <div class="tab-pane fade show active" id="realizarPedido" role="tabpanel" aria-labelledby="home-tab">
       <h2>¡Realiza tu pedido!</h2>
       <br>
+    <div class="alert alert-success" role="alert" th:if="${mensajeCarrito != null}">
+      <p th:text="${mensajeCarrito}"></p>
+    </div>
       <form th:action="@{/carrito/anadir-carrito}" method="POST">
         <!-- Tabla de Plantas -->
         <table class="table table-bordered">
@@ -55,21 +58,21 @@
             </tr>
           </thead>
           <tbody>
-                <tr th:each="planta : ${plantas}">
-                    <td th:text="${planta.nombreComun.toUpperCase()}"></td>
-                    <td th:text="${planta.listaEjemplares.size()}"></td>
-                    <input type="hidden" name="nombre" th:value="${planta.nombreComun}">
-                    <td>
-                        <select class="form-control" th:name="'cantidad[' + ${planta.nombreComun} + ']'">
-                            <option th:if="${planta.listaEjemplares.isEmpty()}" disabled selected>No disponible</option>
-                            <option th:if="${!planta.listaEjemplares.isEmpty()}" value="0" selected>0</option>
-                            <option th:each="ejemplar, iterStat : ${planta.listaEjemplares}" 
-                                    th:value="${iterStat.count}" 
-                                    th:text="${iterStat.count}">
-                            </option>
-                        </select>
-                    </td>
-                </tr>
+			  <tr th:each="planta : ${plantas}">
+			    <td th:text="${planta.nombreComun.toUpperCase()}"></td>
+			    <td th:text="${#lists.size(planta.listaEjemplares.?[disponible == true])}"></td>
+			    <input type="hidden" name="nombre" th:value="${planta.nombreComun}">
+			    <td>
+			        <select class="form-control" th:name="'cantidad[' + ${planta.nombreComun} + ']'">
+			            <option th:if="${#lists.size(planta.listaEjemplares.?[disponible == true]) == 0}" disabled selected>No disponible</option>
+			            <option th:if="${#lists.size(planta.listaEjemplares.?[disponible == true]) != 0}" value="0" selected>0</option>
+			            <option th:each="ejemplar, iterStat : ${planta.listaEjemplares.?[disponible == true]}"
+			                    th:value="${iterStat.count}" 
+			                    th:text="${iterStat.count}">
+			            </option>
+			        </select>
+			    </td>
+			</tr>
                 <!-- Botón para añadir todas las plantas al carrito -->
                 <tr>
                     <td colspan="4">
@@ -86,9 +89,6 @@
       </form>
     </div>
     
-    <div class="alert alert-success" role="alert" th:if="${mensajeCarrito != null}">
-      <p th:text="${mensajeCarrito}"></p>
-    </div>
 
 <!-- Scripts de Bootstrap y JS personalizado -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

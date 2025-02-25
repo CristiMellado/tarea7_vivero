@@ -4,12 +4,17 @@ package com.cristinamellado.vivero.repository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cristinamellado.vivero.modelo.Ejemplar;
 import com.cristinamellado.vivero.modelo.Mensaje;
+import com.cristinamellado.vivero.modelo.Planta;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 
 @Repository
@@ -43,12 +48,30 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 			""")
 	List<Mensaje> seguimientoMensajes(@Param("idEjemplar") Long idEjemplar);
 	
+	List<Ejemplar> findAllByOrderByPlantaNombreComunAscIdAsc();
+	
 	Optional<Ejemplar> findByNombre(String nombre);
+	
+	
+	/**
+	 * @param entityManager
+	 * @param tipoPlanta
+	 * @param cantidadEjemplares
+	 * @return
+	 * Crea una consulta que devuelve una lista de ejemplares que tengan como nombre de planta el parametro
+	 * que se le pasa (tipoPlanta y muestra los resultados indicados.
+	 */
+	default List<Ejemplar> obtenerCantidadEjemplares(EntityManager entityManager,String tipoPlanta, int cantidadEjemplares){
+		return entityManager.createQuery("Select e From Ejemplar e Where e.planta.nombreComun = :tipoPlanta",Ejemplar.class)
+				.setParameter("tipoPlanta", tipoPlanta)
+				.setMaxResults(cantidadEjemplares)
+				.getResultList();
+	}
 
-	@Query("SELECT e FROM Ejemplar e WHERE e.planta.nombreComun = :tipoPlanta")
-//	@Query(value = "SELECT * FROM ejemplares e INNER JOIN plantas p ON e.id_planta = p.id WHERE p.nombre_comun = :tipoPlanta LIMIT ?1", nativeQuery = true)
-	List<Ejemplar> obtenerCantidadEjemplares(@Param("tipoPlanta") String tipoPlanta, @Param("cantidadEjemplares") int cantidadEjemplares);
-
+	@Modifying
+	@Transactional
+	@Query("UPDATE Ejemplar e SET e.disponible = false WHERE e IN :listaEjemplar")
+    void actualizarDisponible(List<Ejemplar> listaEjemplar);
 	
 	
 }//

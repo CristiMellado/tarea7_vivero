@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cristinamellado.vivero.modelo.Cliente;
 import com.cristinamellado.vivero.modelo.Ejemplar;
 import com.cristinamellado.vivero.modelo.Pedido;
 import com.cristinamellado.vivero.modelo.Planta;
+import com.cristinamellado.vivero.servicio.ServiciosCliente;
 import com.cristinamellado.vivero.servicio.ServiciosEjemplar;
 import com.cristinamellado.vivero.servicio.ServiciosPedido;
 import com.cristinamellado.vivero.servicio.ServiciosPlanta;
@@ -33,6 +35,9 @@ public class CarritoController {
 	
 	@Autowired
 	ServiciosEjemplar serviciosEjemplar;
+	
+	@Autowired
+	ServiciosCliente serviciosCliente;
 	
     @GetMapping
     public String carrito() {
@@ -76,13 +81,23 @@ public class CarritoController {
     @PostMapping("/realizar-pedido")
     public String realizarPedido(HttpSession session, Model model) {
     	 Map<String, Integer> ejemplaresCarrito = (Map<String, Integer>) session.getAttribute("carrito");
-    	 List<Ejemplar> ejemplaresPlanta = new ArrayList<Ejemplar>();
-    	 for (Map.Entry<String, Integer> entry : ejemplaresCarrito.entrySet()) {
-			String tipoPlanta = entry.getKey();
-			Integer cantidadEjemplares = entry.getValue();
-			ejemplaresPlanta.addAll(serviciosEjemplar.obtenerCantidadEjemplares(tipoPlanta,cantidadEjemplares));			
-		}
-    	 serviciosPedido.realizarPedido(new Pedido(new Date(), ejemplaresPlanta));
+    	 if (ejemplaresCarrito != null) {
+    		 List<Ejemplar> ejemplaresPlanta = new ArrayList<Ejemplar>();
+    		 
+    		 for (Map.Entry<String, Integer> entry : ejemplaresCarrito.entrySet()) {
+    			 String tipoPlanta = entry.getKey();
+    			 Integer cantidadEjemplares = entry.getValue();
+    			 ejemplaresPlanta.addAll(serviciosEjemplar.obtenerCantidadEjemplares(tipoPlanta,cantidadEjemplares));			
+    		 }
+    		 
+    	  Cliente cliente = serviciosCliente.findByNombre((String)session.getAttribute("usuario"));
+    	 if(serviciosPedido.realizarPedido(new Pedido(new Date(), ejemplaresPlanta, cliente))) {
+    		 session.removeAttribute("carrito");
+    		 serviciosEjemplar.actualizarDisponible(ejemplaresPlanta);
+    	 }
+    	 
+    }
+    	 model.addAttribute("mensajeCarrito", "¡Pedido realizado con éxito!");
     	 return "/carrito";
     }
     

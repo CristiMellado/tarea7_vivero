@@ -38,9 +38,10 @@ public class Pedido implements Serializable{
 
 	public Pedido() {}
 	
-	public Pedido(Date fecha, List<Ejemplar> listaEjemplares) {
+	public Pedido(Date fecha, List<Ejemplar> listaEjemplares, Cliente cliente) {
 		this.fecha = fecha;
 		this.listaEjemplares = listaEjemplares;
+		this.cliente = cliente;
 	}
 
 	public Long getId() {
