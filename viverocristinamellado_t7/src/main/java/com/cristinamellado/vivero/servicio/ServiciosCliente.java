@@ -3,6 +3,7 @@ package com.cristinamellado.vivero.servicio;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,8 @@ public class ServiciosCliente {
     @Autowired
     private CredencialRepository credencialRepository;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    
     public Optional<Cliente> buscarPorNifnie(String nifnie) {
         return clienteRepository.findByNifnie(nifnie);
     }
@@ -56,7 +59,7 @@ public class ServiciosCliente {
             Cliente clienteGuardado = clienteRepository.save(cliente);
             
             if(clienteGuardado != null){
-                credencialRepository.insertarCredencial(usuario, password, perfil.toString());
+                credencialRepository.insertarCredencial(usuario, encoder.encode(password), perfil.toString());
             }
             
             return "Cliente registrado correctamente";

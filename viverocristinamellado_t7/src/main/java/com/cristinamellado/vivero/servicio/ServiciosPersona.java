@@ -3,6 +3,7 @@ package com.cristinamellado.vivero.servicio;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ public class ServiciosPersona {
 	@Autowired
 	CredencialRepository credencialRepository;
 	
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 	@Transactional 
 	public String registrarPersona(Persona persona, String usuario, String password, Perfil perfil) {
@@ -58,7 +60,7 @@ public class ServiciosPersona {
 			try {
 				Persona p = personaRepository.saveAndFlush(persona);
 				if (p != null) {
-					credencialRepository.insertarCredencial(usuario, password, perfil.toString());
+					credencialRepository.insertarCredencial(usuario, encoder.encode(password), perfil.toString());
 					mensaje.append("Se insertó correctamente la persona y su credencial.");
 				}
 			} catch (Exception e) {
