@@ -11,11 +11,8 @@ public class ServiciosPedido {
 	@Autowired
 	PedidoRepository pedidoRepository;
 	
-	public boolean realizarPedido(Pedido pedido) {
-		if(pedidoRepository.saveAndFlush(pedido)!=null) {
-			return true;
-		}
-		return false;
+	public Pedido realizarPedido(Pedido pedido) {
+		return pedidoRepository.saveAndFlush(pedido);
 	}
 	
 	

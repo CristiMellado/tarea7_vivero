@@ -62,7 +62,7 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long>{
 	 * que se le pasa (tipoPlanta y muestra los resultados indicados.
 	 */
 	default List<Ejemplar> obtenerCantidadEjemplares(EntityManager entityManager,String tipoPlanta, int cantidadEjemplares){
-		return entityManager.createQuery("Select e From Ejemplar e Where e.planta.nombreComun = :tipoPlanta",Ejemplar.class)
+		return entityManager.createQuery("Select e From Ejemplar e Where e.planta.nombreComun = :tipoPlanta and e.disponible = true",Ejemplar.class)
 				.setParameter("tipoPlanta", tipoPlanta)
 				.setMaxResults(cantidadEjemplares)
 				.getResultList();
