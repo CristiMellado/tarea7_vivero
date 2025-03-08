@@ -35,37 +35,48 @@
 
 <div class="container mt-5">
     <h2>Mi Carrito</h2>
+    <br>
     <div th:if="${(session.carrito == null or session.carrito.empty) and mensajeCarrito==null}" class="alert alert-info">
         Tu carrito está vacío
     </div>
-    <div th:if="${session.carrito != null and !session.carrito.empty}">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>PLANTA</th>
-                    <th>CANTIDAD</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="planta : ${session.carrito}">
-                    <td th:text="${planta.key}"></td>
-                    <td th:text="${planta.value}"></td>
-                </tr>
-            </tbody>
-        </table>
+	<div th:if="${session.carrito != null and !session.carrito.empty}">
+		<div th:each="pedido, iterador : ${session.carrito}" class="pedido">
+	 		<h3>Pedido #<span th:text="${iterador.index + 1}"></span></h3>
+        	<table class="table table-bordered">
+            	<thead>
+	                <tr>
+	                    <th>PLANTA</th>
+	                    <th>CANTIDAD</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:each="planta : ${pedido}">
+	                    <td th:text="${planta.key}"></td>
+	                    <td th:text="${planta.value}"></td>
+	                </tr>
+	            </tbody>
+	        </table>
         
-        <div class="text-center mt-3">
-            <form th:action="@{/carrito/realizar-pedido}" method="POST" style="display: inline;">
-                <button type="submit" class="btn btn-info rounded-pill px-3">Realizar Pedido</button>
-            </form>
-            <form th:action="@{/carrito/eliminar-pedido}" method="POST" style="display: inline;">
-                <button type="submit" class="btn btn-danger rounded-pill px-3">Eliminar pedido</button>
-            </form>
-        </div>
+	        <div class="text-center mt-3">
+	            <form th:action="@{/carrito/realizar-pedido}" method="POST" style="display: inline;">
+	            	<input type="hidden" name="indicePedido" th:value="${iterador.index}">
+	                <button type="submit" class="btn btn-info rounded-pill px-3">Realizar Pedido</button>
+	            </form>
+	            <form th:action="@{/carrito/eliminar-pedido}" method="POST" style="display: inline;">
+	            	<input type="hidden" name="indicePedido" th:value="${iterador.index}">
+	                <button type="submit" class="btn btn-danger rounded-pill px-3">Eliminar pedido</button>
+	            </form>
+	        </div>
+    	</div>
     </div>
 	<div class="mt-4">
     	<div class="alert alert-success" role="alert" th:if="${mensajeCarrito != null}">
         	<p th:text="${mensajeCarrito}"></p>
+    	</div>
+	</div>
+	<div class="mt-4">
+    	<div class="alert alert-danger" role="alert" th:if="${mensajeCarritoAgotado != null}">
+        	<p th:text="${mensajeCarritoAgotado}"></p>
     	</div>
 	</div>
 </div>
