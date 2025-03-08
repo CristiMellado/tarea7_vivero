@@ -96,6 +96,21 @@ body {
 	margin-right: 5px;
 }
 
+details {
+    text-align: center; 
+    margin: 10px 0; 
+}
 
+
+
+details ul {
+    list-style: none; 
+    padding: 0;
+    margin: 0 auto; 
+    display: inline-block; 
+    text-align: left; 
+    color:#337180;
+    font-weight:bold;
+}
 
 

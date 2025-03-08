@@ -22,6 +22,7 @@ public class SecurityConfig {
                                 // Permitir acceso a páginas de autenticación
                                 .requestMatchers("/auth/**", "/clientes/registrar-cliente").permitAll()
                                 // Rutas privadas
+                                .requestMatchers("/clientes/**").hasRole("CLIENTE")
                                 .requestMatchers("/personas/**", "/plantas/**").hasRole("ADMINISTRADOR")
                                 .requestMatchers("/mensajes/**").hasAnyRole("ADMINISTRADOR", "PERSONAL")
                                 .requestMatchers("/ejemplares/**").hasAnyRole("ADMINISTRADOR", "PERSONAL")

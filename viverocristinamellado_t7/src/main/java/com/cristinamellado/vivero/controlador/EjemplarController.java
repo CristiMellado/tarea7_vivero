@@ -122,8 +122,8 @@ public class EjemplarController {
     
     @GetMapping("/gestion-stock")
     public String gestionStock(Model model) {
-        List<Ejemplar> listaEjemplar = serviciosEjemplar.verEjemplaresId();
-        model.addAttribute("ejemplares", listaEjemplar);
+        List<Planta> listaPlantas = serviciosPlanta.verPlantas();
+        model.addAttribute("plantas", listaPlantas);
     	return "gestion-stock";
     }
     

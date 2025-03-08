@@ -42,15 +42,25 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Planta</th>
-                        <th>Ejemplar</th>
-                        <th>Estado</th>
+                        <th>Nº de Ejemplares</th>
+                        <th>Más detalle</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="ejemplar : ${ejemplares}">
-                        <td th:text="${ejemplar.planta.nombreComun.toUpperCase()}"></td>
-                        <td th:text="${ejemplar.nombre.toUpperCase()}"></td>
-                        <td th:text="${ejemplar.disponible ? 'Disponible' : 'No disponible'}">></td>     
+                    <tr th:each="planta : ${plantas}">
+                        <td th:text="${planta.nombreComun.toUpperCase()}"></td>
+                        <td th:text="${planta.listaEjemplares.size()}"></td>
+                        <td>
+                         <details>
+        					<summary>Ver Detalles</summary>
+							<ul>
+					            <li th:each="ejemplar : ${planta.listaEjemplares}">
+					                <span th:text="${ejemplar.nombre}"></span> - 
+					                <span th:text="${ejemplar.disponible} ? 'Disponible' : 'No disponible'"></span>
+					            </li>
+					        </ul>
+    					</details>
+                        </td>     
                     </tr>
                     <tr>
    
