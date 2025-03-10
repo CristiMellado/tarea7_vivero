@@ -9,6 +9,12 @@
 </head>
 <body>
 	<div class="container mt-3">
+    <div class="alert alert-primary" role="alert" th:if="${mensajeResultado!=null and res.equals('ok')}">
+        <p th:text="${mensajeResultado}"></p>
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${mensajeResultado!=null and res.equals('ko')}">
+        <p th:text="${mensajeResultado}"></p>
+    </div>
     <div class="mb-2 text-center">
         <img th:src="@{/img/cliente.png}" alt="Icono cliente" width="50">
         <h1>Alta de Cliente</h1>
@@ -66,12 +72,6 @@
             <button type="submit" class="btn color-boton">Registrar</button>
         	<button onclick="window.location.href='/volver'" type="button" class="btn color-boton">Volver</button>
         </form>
-    </div>
-    <div class="alert alert-primary" role="alert" th:if="${mensajeResultado!=null and res.equals('ok')}">
-        <p th:text="${mensajeResultado}"></p>
-    </div>
-    <div class="alert alert-danger" role="alert" th:if="${mensajeResultado!=null and res.equals('ko')}">
-        <p th:text="${mensajeResultado}"></p>
     </div>
 </div>
 	

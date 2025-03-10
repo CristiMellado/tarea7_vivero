@@ -47,6 +47,10 @@ public class ServiciosCliente {
             return "La contraseña debe contener al menos 5 caracteres alfanuméricos";
         }
         
+        if (!Validacion.validarTelefono(cliente.getTelefono())) {
+            return "El número de teléfono no tiene un formato válido";
+        }
+
         if (clienteRepository.findByNifnie(cliente.getNifnie()).isPresent()) {
             return "Ya existe un cliente con ese NIF/NIE";
         }

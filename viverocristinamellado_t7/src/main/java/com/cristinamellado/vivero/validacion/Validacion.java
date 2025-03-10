@@ -142,5 +142,23 @@ public class Validacion {
 		nifnie = nifnie.toUpperCase();
 		return patternNif.matcher(nifnie).matches() || patternNie.matcher(nifnie).matches();
 	}
+	
+	//validarTelefono
+	public static boolean validarTelefono(String telefono) {
+	    if (telefono == null || telefono.isEmpty()) {
+	        return false;
+	    }
+	    if (telefono.length() != 9) {
+	        return false;
+	    }
+	    if (!telefono.matches("[0-9]+")) {
+	        return false;
+	    }
+
+	    // Comprobar si el número empieza con los prefijos válidos (6, 7, 2, 8, o 9)
+	    char primerDigito = telefono.charAt(0);
+	    return (primerDigito == '6' || primerDigito == '7' || primerDigito == '2' || primerDigito == '8' || primerDigito == '9');
+	}
+
 
 }

@@ -1,5 +1,8 @@
 package com.cristinamellado.vivero.controlador;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -102,6 +105,8 @@ public class CarritoController {
 	@PostMapping("/realizar-pedido")
 	public String realizarPedido(@RequestParam int indicePedido, HttpSession session, Model model) {
 		List<Map<String, Integer>> carrito = (List<Map<String, Integer>>) session.getAttribute("carrito");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
 		if (carrito != null && indicePedido >= 0 && indicePedido < carrito.size()) {
 			Map<String, Integer> ejemplaresCarrito = carrito.get(indicePedido);
 			List<Ejemplar> ejemplaresPlanta = new ArrayList<>();
@@ -119,9 +124,11 @@ public class CarritoController {
 				if (pedido != null) {
 					serviciosEjemplar.actualizarDisponible(ejemplaresPlanta);
 					for (Ejemplar ejemplar : ejemplaresPlanta) {
+						LocalDateTime fechaFormateada = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+						String fechaPedido = fechaFormateada.format(formatter);
 						String mensajePedido = "El cliente " + cliente.getNombre() + 
 								" compró el ejemplar " + ejemplar.getNombre() + " el día " +
-								new Date() + " en el pedido " + pedido.getId();
+								fechaPedido + " en el pedido " + pedido.getId();
 						
 						serviciosMensaje.insertarMensaje(new Mensaje(mensajePedido, null, ejemplar));
 					}
